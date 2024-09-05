@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "AJtxLNHbCq1k4v0MQOmQii6H7sdYqxuBMG7FiF1SHIlII8YbuxQW0vG3mCOAgyTttvNshkNm2YnU46hMOZGt8g==",
+  "success": true,
+  "projectFilePath": "/home/Esteban/Documents/InteligenciaArtificial/InteligenciaArtificial.csproj",
+  "expectedPackageFiles": [
+    "/home/Esteban/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.7/microsoft.aspnetcore.app.ref.8.0.7.nupkg.sha512"
+  ],
+  "logs": []
+}
