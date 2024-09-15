@@ -98,7 +98,7 @@ class Player
 
 		//Costos se van a basar en distancia y cantidad de enemigos en los puntos
 		//Para esto pensando en dron Equipos[ID,i] hay que comparar costos de los puntos.
-		int menordist = 0;
+		int menordist = int.MaxValue;
 		for(int j= 0; j<Z;j++)
 		{
 		    
