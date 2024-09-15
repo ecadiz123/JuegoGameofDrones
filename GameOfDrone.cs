@@ -32,7 +32,7 @@ class Player
 	//metodo para printear el pto en el formato output del juego
 	public void printpto(){
 	    
-	    Console.WriteLine($"{this.x} {this.y}")
+	    Console.WriteLine($"{this.x} {this.y}");
 	}
     }
 
