@@ -57,6 +57,7 @@ class Player
             Punto centroarreglo = new Punto();
             inputs = Console.ReadLine().Split(' ');
             X = int.Parse(inputs[0]); // corresponds to the position of the center of a zone. A zone is a circle with a radius of 100 units.
+		//condicional para comparar costos y enviar dron.
             Y = int.Parse(inputs[1]);
             centroarreglo.x = X;
             centroarreglo.y = Y;
@@ -95,14 +96,28 @@ class Player
             for (int i = 0; i < D; i++)
             {
 
-                // Write an action using Console.WriteLine()
-                // To debug: Console.Error.WriteLine("Debug messages...");
+		//Costos se van a basar en distancia y cantidad de enemigos en los puntos
+		//Para esto pensando en dron Equipos[ID,i] hay que comparar costos de los puntos.
+		int menordist = 0;
+		for(int j= 0; j<Z;j++)
+		{
+		    
+		    int aux=CentrosAreas[j].distancia(Equipos[ID,i]);
+		    if (menordist>aux)
+		    {
+		    menordist=aux;
+		    }
+
+		}
+		for(int j= 0; j<Z;j++)
+		{
+		    if (menordist==CentrosAreas[j].distancia(Equipos[ID,i]))
+			break;
+		}
+		CentrosAreas[j].printpto();
 
 
-                // output a destination point to be reached by one of your drones. The first line corresponds to the first of your drones that you were provided as input, the next to the second, etc.
 
-
-            }
         }
     }
 }
