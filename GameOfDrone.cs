@@ -21,14 +21,19 @@ class Player
         public int distancia(int xini, int yini)
         {
             int diag = ((this.x - xini) * (this.x - xini)) + ((this.y - yini) * (this.y - yini));
-            double aux;
-            aux = Math.Sqrt(Convert.ToDouble(diag));
+            double aux;//doble para aplicar raiz de formula de distancia
+            aux = Math.Sqrt(Convert.ToDouble(diag));//se convierte a double para raiz y se guarda en aux
             //Se redondea manualmente para obtener el valor mas cercano
             //ya que metodo convert redondea a valor par
             Math.Round(aux);
             return Convert.ToInt32(aux);
 
         }
+	//metodo para printear el pto en el formato output del juego
+	public void printpto(){
+	    
+	    Console.WriteLine($"{this.x} {this.y}");
+	}
     }
 
     static void a(string[] args)
