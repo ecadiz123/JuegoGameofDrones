@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/Esteban/Documents/InteligenciaArtificial/InteligenciaArtificial.csproj": {}
+    "/home/Esteban/Documents/Inteligencia-Artificial/JuegoGameofDrones/InteligenciaArtificial.csproj": {}
   },
   "projects": {
-    "/home/Esteban/Documents/InteligenciaArtificial/InteligenciaArtificial.csproj": {
+    "/home/Esteban/Documents/Inteligencia-Artificial/JuegoGameofDrones/InteligenciaArtificial.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/Esteban/Documents/InteligenciaArtificial/InteligenciaArtificial.csproj",
+        "projectUniqueName": "/home/Esteban/Documents/Inteligencia-Artificial/JuegoGameofDrones/InteligenciaArtificial.csproj",
         "projectName": "InteligenciaArtificial",
-        "projectPath": "/home/Esteban/Documents/InteligenciaArtificial/InteligenciaArtificial.csproj",
+        "projectPath": "/home/Esteban/Documents/Inteligencia-Artificial/JuegoGameofDrones/InteligenciaArtificial.csproj",
         "packagesPath": "/home/Esteban/.nuget/packages/",
-        "outputPath": "/home/Esteban/Documents/InteligenciaArtificial/obj/",
+        "outputPath": "/home/Esteban/Documents/Inteligencia-Artificial/JuegoGameofDrones/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/Esteban/.nuget/NuGet/NuGet.Config"
@@ -51,7 +51,7 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[8.0.7, 8.0.7]"
+              "version": "[8.0.8, 8.0.8]"
             }
           ],
           "frameworkReferences": {
@@ -59,7 +59,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.107/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.108/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
