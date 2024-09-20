@@ -43,7 +43,7 @@ class Player
 	//Clase que se va a usar para ver si hay un dron en la proximidad de la zona, como las zonas son circulares, se va a trabajar con circulo
 	public int radio;
 	public Punto centro= new Punto();
-	//metodo que devuelve la cantidad de drones en la proximidad, 0 es que no hay
+	//metodo que devuelve si hay drones en la proximidad, 0 es que no hay
 	public int puntoAdentro(Punto aux)
 	{
 	    //Se va a trabajar con ecuacion de la circunferencia para ver si punto esta adentro o no. Es int, si hay devuelve 1, esto para después facilitar
@@ -75,14 +75,14 @@ class Player
 	for (int i = 0; i < Z; i++)//Z es cantidad de zonas
 	{
 	    //aux para guardar centros
-	    Punto centroarreglo = new Punto();
+	    Proximidad auxzona= new Proximidad();
 	    inputs = Console.ReadLine().Split(' ');
 	    X = int.Parse(inputs[0]); // corresponds to the position of the center of a zone. A zone is a circle with a radius of 100 units.
 	    Y = int.Parse(inputs[1]);
-	    centroarreglo.x = X;
-	    centroarreglo.y = Y;
-	    areaZona[i].centro= centroarreglo;
-	    areaZona[i].radio=100;//radio predeterminado zonas.
+	    auxzona.centro.x=X;
+	    auxzona.centro.y=Y;
+	    auxzona.radio=100;//radio predeterminado zonas.
+	    areaZona[i]=auxzona;
 	}
 
 
@@ -120,9 +120,31 @@ class Player
 		    Equipos[i,j] = aux1;
 		}
 	    }
+    
+	    //For que recorren matriz de equipos para ver la cantidad de enemigos en cada zona, se van a guardar en arreglo
+	    //cantDeEnemigos[0]= cantidad enemigos cerca de zona 0
+	    //Es necesario 3 for para recorrer zonas, jugadores y drones respectivamente.
+	    int[] cantDeEnemigos= new int[Z];
+	    
+	    for (int i = 0; i < Z; i++)//for de zonas
+	    {
 
+		for (int j = 0; j<P; j++)//for de jugadores
+		{	
+		    for(int k = 0; k<D; k++)//for de drones
+		    {
+		    //if para guardar solo drones enemigos
+			if (j!=ID)
+			{
+			    //si encuentra enemigo en la zona, suma 1
+			    cantDeEnemigos[i]+=areaZona[i].puntoAdentro(Equipos[j,k]);
 
-	    for (int i = 0; i < D; i++)
+			}
+		    }
+		}
+	    }
+
+	    for (int i = 0; i < D; i++)//for para actos de cada dron
 	    {
 
 		//Donde se van a guardar costos. Costo[0] = costo del dron a zona 0
@@ -137,9 +159,26 @@ class Player
 		    int aux=Equipos[ID,i].distancia(areaZona[j].centro);
 		    distancias[j] = aux;
 		}
-		//Arreglo para guardar cantidad de drones enemigos que estan en la zona
-		int[] cantEnemigos = new int [Z];
+		//calculo de costos totales 
+		//variable auxiliar para saber cual es el valor del menor costo
+		int menorcosto= int.MaxValue;
+		for(int j= 0;j<Z;j++)
+		{
+		    //Calculo simple donde se le suma a la distancia la cantidad de enemigos multiplicada por el radio de la zona en que se encuentran
+		    costostotal[j]=distancias[j]+cantDeEnemigos[j]*areaZona[j].radio;
 
+
+		    //if que va guardando el menor
+		    if (menorcosto>costostotal[j])
+		    {
+			menorcosto=costostotal[j];
+		    }
+		}
+		//variable que guarda la zona con menor costo
+		//usa metodo de c# que devuelve indice, el cual representa la zona en nuestro caso
+		int zonamenor = Array.FindIndex(costostotal, x => x==menorcosto);
+		//se imprime zona menor costo
+		areaZona[zonamenor].centro.printpto();
 
 
 
