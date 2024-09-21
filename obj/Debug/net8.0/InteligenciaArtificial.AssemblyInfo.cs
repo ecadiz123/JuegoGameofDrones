@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InteligenciaArtificial")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6584dc9e4adc0d18462966e30968478ffdce2291")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0e8d2373853bf468dae23f0d57338cb81e9c898f")]
 [assembly: System.Reflection.AssemblyProductAttribute("InteligenciaArtificial")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InteligenciaArtificial")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
