@@ -5,8 +5,19 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
-/**
 
+
+/*Para trabajar el problema se utilizó una estrategia basada en costos. Originalmente se planeó usar
+ * grafos, pero no fue necesesario ya que utilizando matrices y arreglos estaticos bastaba. 
+ *
+ * El programa trabaja individualmente con cada dron, al cual le asigna costo para cada zona.
+ * Este se calcula basandose en la distancia para llegar y los enemigos que tenga dentro. Mientras
+ * ambas sean mayores, mayor será este costo. Una vez se calculan para todas las zonas, el dron irá 
+ * a la zona de menor costo posible. Esta operacion se repite individualmente para cada dron.*/
+
+
+
+/**
  * the standard input according to the problem statement.
  **/
 class Player
