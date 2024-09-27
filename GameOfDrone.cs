@@ -34,7 +34,7 @@ class Player
 		}
 		
 		//metodo para printear el pto en el formato output del juego
-		public void printpto(){
+		public void printPto(){
 
 			Console.WriteLine($"{this.x} {this.y}");
 		}
@@ -78,14 +78,14 @@ class Player
 		for (int i = 0; i < Z; i++)//Z es cantidad de zonas
 		{
 			//aux para guardar centros
-			Proximidad auxzona= new Proximidad();
+			Proximidad auxZona= new Proximidad();
 			inputs = Console.ReadLine().Split(' ');
 			X = int.Parse(inputs[0]); // corresponds to the position of the center of a zone. A zone is a circle with a radius of 100 units.
 			Y = int.Parse(inputs[1]);
-			auxzona.centro.x=X;
-			auxzona.centro.y=Y;
-			auxzona.radio=100;//radio predeterminado zonas.
-			areaZona[i]=auxzona;
+			auxZona.centro.x=X;
+			auxZona.centro.y=Y;
+			auxZona.radio=100;//radio predeterminado zonas.
+			areaZona[i]=auxZona;
 		}
 
 
@@ -101,12 +101,12 @@ class Player
 		while (true)
 		{	
 			//En cada ronda se actualizara el ID del area. IDAreas[0] = 1, es que el area 0 esta dominada por equipo 1.
-			int[] IDAreas = new int[Z];
+			int[] idAreas = new int[Z];
 			for (int i = 0; i < Z; i++)//Z es cantidad de zonas
 			{
 				int TID = int.Parse(Console.ReadLine()); // ID of the team controlling the zone (0, 1, 2, or 3) or -1 if it is not controlled. The zones are given in the same order as in the initialization.
 									//Se guarda ID en arreglo
-				IDAreas[i] = TID;
+				idAreas[i] = TID;
 
 			}
 
@@ -126,10 +126,12 @@ class Player
 			}
 		
 			//For que recorren matriz de equipos para ver la cantidad de drones en cada zona, se van a guardar en arreglo
+			//fila=zona
+			//columna=jugadores
 			//cantDeDrones[0,1]= cantidad de drones del jugador 0 en la zona 1
 			//Es necesario 3 for para recorrer zonas, jugadores y drones respectivamente.
 			
-			int[] cantDeEnemigos = new int[Z];
+			int[,] cantDeEnemigos = new int[P,Z];
 			for (int i = 0; i < Z; i++)//for de zonas
 			{
 				for (int j = 0; j<P; j++)//for de jugadores
@@ -138,7 +140,8 @@ class Player
 					{
 					    if(j!=ID)
 					    {
-						cantDeEnemigos[i]+=areaZona[i].puntoAdentro(Equipos[j,k]);
+						//Si encuentra un dron del jugador j en la zona i, le suma 1
+						cantDeEnemigos[i,j]+=areaZona[i].puntoAdentro(Equipos[j,k]);
 					    }
 					}
 				}
@@ -162,13 +165,41 @@ class Player
 				//calculo de costos totales 
 				//variable auxiliar para saber cual es el valor del menor costo
 				int menorcosto= int.MaxValue;
+				/*
+				 *tratar de hacer que los drones revisen por equipos la cantidad de enemigos y que vayan a la zona que
+				 se pueda obtener
+
+
+				 * */
+				//si dos elementos de la matriz en la misma fila son iguales y pequeños
+				//que vaya a capturar zona que corresponde a la fila de la matriz
+
+				//primero se va a definir que es considerado pocos drones
+				//va a ser numeroDeDrones/numeroDeJugadores
+
+
+				for(int j= 0;j<Z;j++)//se recorren zonas en j
+				{
+					for (int k=0;k<P;k++)
+					{
+
+					}
+				}
+
+
+				
+
 				for(int j= 0;j<Z;j++)
 				{
 
 					//Calculo simple donde se le suma a la distancia la cantidad de enemigos multiplicada por una constante obtenida mediante prueba
 					//El calculo se va a hacer de forma distinta para cada cantidad de drones, así escalarlo de manera que funcione bien en todos
 					//los casos
-				    switch (D)
+
+
+
+
+				    /*switch (D)
 				    {
 					case 3: costostotal[j] = distancias[j] + cantDeEnemigos[j]*300;
 					    break;
@@ -188,7 +219,7 @@ class Player
 					    break;                                                            
 					case 11:costostotal[j] = distancias[j] + cantDeEnemigos[j]*1100;
 					    break;
-				    }
+				    }*/
 					//if que va guardando el menor
 					if (menorcosto>costostotal[j])
 					{
