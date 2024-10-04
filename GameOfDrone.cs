@@ -119,13 +119,9 @@ class Player
 		// game loop
 		while (true)
 		{	
-			//En cada ronda se actualizara el ID del area. IDAreas[0] = 1, es que el area 0 esta dominada por equipo 1.
-			int[] IDAreas = new int[Z];
 			for (int i = 0; i < Z; i++)//Z es cantidad de zonas
 			{
 				int TID = int.Parse(Console.ReadLine()); // ID of the team controlling the zone (0, 1, 2, or 3) or -1 if it is not controlled. The zones are given in the same order as in the initialization.
-									 //Se guarda ID en arreglo
-				IDAreas[i] = TID;
 
 			}
 
