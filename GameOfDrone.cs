@@ -7,13 +7,21 @@ using System.Collections.Generic;
 
 
 
-/*Para trabajar el problema se utilizó una estrategia basada en costos. Originalmente se planeó usar
- * grafos, pero no fue necesesario ya que utilizando matrices y arreglos estaticos bastaba. 
+/*  
+ * El agente esta basado en una estrategia de costos. Este corresponde a un numero real, por lo que se
+ * puede considerar un agente basado en utilidad.
  *
  * El programa trabaja individualmente con cada dron, al cual le asigna costo para cada zona.
  * Este se calcula basandose en la distancia para llegar y los enemigos que tenga dentro. Mientras
  * ambas sean mayores, mayor será este costo. Una vez se calculan para todas las zonas, el dron irá 
- * a la zona de menor costo posible. Esta operacion se repite individualmente para cada dron.*/
+ * a la zona de menor costo posible. Esta operacion se repite individualmente para cada dron.
+ * 
+ * La limitación principal de este agente es que no puede distinguir un equipo enemigo de otro
+ * por lo que un caso donde haya 3 de un equipo en una zona lo va a considerar igual a cuando hay
+ * un dron de 3 equipos distintos.
+ *
+ * */
+
 
 
 
@@ -22,9 +30,9 @@ using System.Collections.Generic;
  **/
 class Player
 {
-    //Clase para trabajar con puntos de la matriz
-    class Punto
-    {
+	//Clase para trabajar con puntos de la matriz
+	class Punto
+	{
 		public int x;
 		public int y;
 
@@ -43,17 +51,17 @@ class Player
 			return Convert.ToInt32(diagdouble);
 
 		}
-		
+
 		//metodo para printear el pto en el formato output del juego
 		public void printpto(){
 
 			Console.WriteLine($"{this.x} {this.y}");
 		}
-    }
+	}
 
 
-    class Proximidad
-    {
+	class Proximidad
+	{
 		//Clase que se va a usar para ver si hay un dron en la proximidad de la zona, como las zonas son circulares, se va a trabajar con circulo
 		public int radio;
 		public Punto centro= new Punto();
@@ -64,18 +72,18 @@ class Player
 			//el guardar cuantos hay en un arreglo mas adelante
 			int xh= aux.x-this.centro.x;//(x-h)
 			int yk= aux.y-this.centro.y;//(y-k)
-						//expresion que evalua si esta dentro o no del circulo
+						    //expresion que evalua si esta dentro o no del circulo
 			if ((xh*xh)+(yk*yk)<= (this.radio*this.radio))
-			return 1;
+				return 1;
 			else 
-			return 0;
+				return 0;
 
 		}
-    }
+	}
 
 
-    static void a(string[] args)
-    {
+	static void a(string[] args)
+	{
 		string[] inputs;
 		inputs = Console.ReadLine().Split(' ');
 		int P = int.Parse(inputs[0]); // number of players in the game (2 to 4 players)
@@ -89,14 +97,14 @@ class Player
 		for (int i = 0; i < Z; i++)//Z es cantidad de zonas
 		{
 			//aux para guardar centros
-			Proximidad auxzona= new Proximidad();
+			Proximidad auxZona= new Proximidad();
 			inputs = Console.ReadLine().Split(' ');
 			X = int.Parse(inputs[0]); // corresponds to the position of the center of a zone. A zone is a circle with a radius of 100 units.
 			Y = int.Parse(inputs[1]);
-			auxzona.centro.x=X;
-			auxzona.centro.y=Y;
-			auxzona.radio=100;//radio predeterminado zonas.
-			areaZona[i]=auxzona;
+			auxZona.centro.x=X;
+			auxZona.centro.y=Y;
+			auxZona.radio=100;//radio predeterminado zonas.
+			areaZona[i]=auxZona;
 		}
 
 
@@ -116,7 +124,7 @@ class Player
 			for (int i = 0; i < Z; i++)//Z es cantidad de zonas
 			{
 				int TID = int.Parse(Console.ReadLine()); // ID of the team controlling the zone (0, 1, 2, or 3) or -1 if it is not controlled. The zones are given in the same order as in the initialization.
-									//Se guarda ID en arreglo
+									 //Se guarda ID en arreglo
 				IDAreas[i] = TID;
 
 			}
@@ -135,11 +143,11 @@ class Player
 					Equipos[i,j] = aux1;
 				}
 			}
-		
+
 			//For que recorren matriz de equipos para ver la cantidad de drones en cada zona, se van a guardar en arreglo
 			//cantDeDrones[0,1]= cantidad de drones del jugador 0 en la zona 1
 			//Es necesario 3 for para recorrer zonas, jugadores y drones respectivamente.
-			
+
 			int[] cantDeEnemigos = new int[Z];
 			for (int i = 0; i < Z; i++)//for de zonas
 			{
@@ -147,10 +155,10 @@ class Player
 				{	
 					for(int k = 0; k<D; k++)//for de drones
 					{
-					    if(j!=ID)
-					    {
-						cantDeEnemigos[i]+=areaZona[i].puntoAdentro(Equipos[j,k]);
-					    }
+						if(j!=ID)
+						{
+							cantDeEnemigos[i]+=areaZona[i].puntoAdentro(Equipos[j,k]);
+						}
 					}
 				}
 			}
@@ -159,7 +167,7 @@ class Player
 			{
 
 				//Donde se van a guardar costos. Costo[0] = costo del dron a zona 0
-				int[] costostotal = new int[Z];
+				int[] costosTotal = new int[Z];
 
 				//Donde se van a guardar distancias a zonas del dron, Distancia[0]= zona 0
 				int[] distancias = new int[Z];
@@ -172,47 +180,28 @@ class Player
 				}
 				//calculo de costos totales 
 				//variable auxiliar para saber cual es el valor del menor costo
-				int menorcosto= int.MaxValue;
+				int menorCosto= int.MaxValue;
 				for(int j= 0;j<Z;j++)
 				{
 
 					//Calculo simple donde se le suma a la distancia la cantidad de enemigos multiplicada por una constante obtenida mediante prueba
 					//El calculo se va a hacer de forma distinta para cada cantidad de drones, así escalarlo de manera que funcione bien en todos
-					//los casos
-				    switch (D)
-				    {
-					case 3: costostotal[j] = distancias[j] + cantDeEnemigos[j]*300;
-					    break;
-					case 4:costostotal[j] = distancias[j] + cantDeEnemigos[j]*400;
-					    break;
-					case 5:costostotal[j] = distancias[j] + cantDeEnemigos[j]*500;
-					    break;
-					case 6:costostotal[j] = distancias[j] + cantDeEnemigos[j]*600;
-					    break;                                                          
-					case 7:costostotal[j] = distancias[j] + cantDeEnemigos[j]*700;
-					    break;                                                         
-					case 8:costostotal[j] = distancias[j] + cantDeEnemigos[j]*800;
-					    break;                                                          
-					case 9:costostotal[j] = distancias[j] + cantDeEnemigos[j]*900;
-					    break;
-					case 10:costostotal[j] = distancias[j] + cantDeEnemigos[j]*1000;
-					    break;                                                            
-					case 11:costostotal[j] = distancias[j] + cantDeEnemigos[j]*1100;
-					    break;
-				    }
+					//los casos se van a separar simplemente multiplicando por la cantidad de drones la constante
+					costosTotal[j] = distancias[j] + cantDeEnemigos[j]*D*100;
+
 					//if que va guardando el menor
-					if (menorcosto>costostotal[j])
+					if (menorCosto>costosTotal[j])
 					{
-						menorcosto=costostotal[j];
+						menorCosto=costosTotal[j];
 					}
 				}
 				//variable que guarda la zona con menor costo
 				//usa metodo de c# que devuelve indice, el cual representa la zona en nuestro caso
-				int zonamenor = Array.FindIndex(costostotal, x => x==menorcosto);
+				int zonamenor = Array.FindIndex(costosTotal, x => x==menorCosto);
 				//se imprime zona menor costo
 				areaZona[zonamenor].centro.printpto();
 
 			}
 		}
-    }
+	}
 }
